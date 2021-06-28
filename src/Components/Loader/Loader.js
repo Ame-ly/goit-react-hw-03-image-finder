@@ -1,6 +1,7 @@
 import { Component } from 'react';
 import Loader from 'react-loader-spinner';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import s from './Loader.module.css'
 // import PropTypes from 'prop-types'
 
 class Looader extends Component {
@@ -9,6 +10,7 @@ class Looader extends Component {
       
     return (
       <Loader
+      className={s.Loader}
         timeout={3000}
         type="ThreeDots"
         color="#00BFFF"
