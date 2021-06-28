@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import s from './App.modal.css';
+import s from './App.module.css';
 
 import fetchImg from './Components/API/Pixabay';
 import Searchbar from './Components/Searchbar';
@@ -10,7 +10,7 @@ import Looader from './Components/Loader';
 
 class App extends Component {
   state = {
-    // showModal: false,
+
     isLoading: false,
     largeURL: '',
     images: [],
@@ -23,7 +23,7 @@ class App extends Component {
     if (this.state.searchQuery !== prevState.searchQuery) {
       this.FetchImages();
     }
-    if (this.state.currentPage > 2) {
+    if (this.state.pageNumber > 2) {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
         behavior: 'smooth',

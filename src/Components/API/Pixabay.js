@@ -13,4 +13,5 @@ const fetchImg = async ({ query = '', pageNumber = 1 }) => {
 
   return r.data.hits;
 };
+
 export default fetchImg;
