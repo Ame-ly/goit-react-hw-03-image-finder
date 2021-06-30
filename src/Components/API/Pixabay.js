@@ -10,7 +10,7 @@ const fetchImg = async ({ query = '', pageNumber = 1 }) => {
   const r = await axios.get(
     `${BASE_URL}?key=${KEY}&q=${query}&page=${pageNumber}${OPTIONS}`,
   );
-
+  console.log(r.data.hits);
   return r.data.hits;
 };
 

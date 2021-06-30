@@ -10,17 +10,16 @@ import Looader from './Components/Loader';
 
 class App extends Component {
   state = {
-
     isLoading: false,
     largeURL: '',
     images: [],
-    searchQuery: '',
+    query: '',
     pageNumber: 1,
     error: null,
   };
 
   componentDidUpdate(PrevProps, prevState) {
-    if (this.state.searchQuery !== prevState.searchQuery) {
+    if (this.state.query !== prevState.query) {
       this.FetchImages();
     }
     if (this.state.pageNumber > 2) {
@@ -35,23 +34,26 @@ class App extends Component {
 
   onSubmit = searchQuery => {
     this.setState({
-      searchQuery: searchQuery,
+      query: searchQuery,
       images: [],
       pageNumber: 1,
       largeURL: '',
+      error: null,
     });
   };
 
-  FetchImages = async () => {
-    const { searchQuery, pageNumber } = this.state;
+  FetchImages = () => {
+    const { query, pageNumber } = this.state;
     this.setState({ isLoading: true });
 
-    fetchImg(searchQuery, pageNumber)
-      .then(images =>
-        this.setState(prevState => ({
-          images: [...prevState.images, ...images],
-          pageNumber: prevState.pageNumber + 1,
-        })),
+    fetchImg({ query, pageNumber })
+      .then(newImages =>
+        this.setState(({ images, pageNumber }) => {
+          return {
+            images: [...images, ...newImages],
+            pageNumber: pageNumber + 1,
+          };
+        }),
       )
       .catch(error => this.setState({ error }))
       .finally(() => {
@@ -64,7 +66,11 @@ class App extends Component {
 
     return (
       <div className={s.App}>
-        {error && <span>Something went wrong{error.message}</span>}
+        {error && (
+          <span style={{ color: 'red', fontSize: 46 }}>
+            Something went wrong:{error.message}
+          </span>
+        )}
         <Searchbar onSubmit={this.onSubmit} />
 
         <ImageGallery makeLargeImg={this.makeLargeImg} images={images} />
