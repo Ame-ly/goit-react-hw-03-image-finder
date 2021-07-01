@@ -11,7 +11,7 @@ const ImageGalleryItem = ({ makeLargeImg, images }) =>
         className={s.ImageGalleryItem__image}
         src={webformatURL}
         alt={tags}
-        onClick={() => makeLargeImg(largeImageURL)}
+        onClick={() => makeLargeImg(largeImageURL,tags)}
       />
     </li>
   ));

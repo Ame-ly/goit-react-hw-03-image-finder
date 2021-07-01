@@ -16,11 +16,12 @@ class App extends Component {
     query: '',
     pageNumber: 1,
     error: null,
+    tags: '',
   };
 
   componentDidUpdate(PrevProps, prevState) {
     if (this.state.query !== prevState.query) {
-      this.FetchImages();
+      this.getImages();
     }
     if (this.state.pageNumber > 2) {
       window.scrollTo({
@@ -30,7 +31,10 @@ class App extends Component {
     }
   }
 
-  makeLargeImg = largeURL => this.setState({ largeURL });
+  makeLargeImg = (largeURL, tags) => {
+    console.log(largeURL, tags);
+    return this.setState({ largeURL, tags });
+  };
 
   onSubmit = searchQuery => {
     this.setState({
@@ -39,10 +43,11 @@ class App extends Component {
       pageNumber: 1,
       largeURL: '',
       error: null,
+      tags: '',
     });
   };
 
-  FetchImages = () => {
+  getImages = () => {
     const { query, pageNumber } = this.state;
     this.setState({ isLoading: true });
 
@@ -62,7 +67,7 @@ class App extends Component {
   };
 
   render() {
-    const { images, isLoading, largeURL, error } = this.state;
+    const { images, isLoading, largeURL, error, tags } = this.state;
 
     return (
       <div className={s.App}>
@@ -75,15 +80,13 @@ class App extends Component {
 
         <ImageGallery makeLargeImg={this.makeLargeImg} images={images} />
 
-        {images.length > 0 && !isLoading && (
-          <Button onClick={this.FetchImages} />
-        )}
+        {images.length > 0 && !isLoading && <Button onClick={this.getImages} />}
 
         {isLoading && <Looader />}
 
         {largeURL && (
           <Modal makeLargeImg={this.makeLargeImg}>
-            <img src={largeURL} alt="" />
+            <img src={largeURL} alt={tags} />
           </Modal>
         )}
       </div>
@@ -92,3 +95,5 @@ class App extends Component {
 }
 
 export default App;
+
+// скролл страницы при модальном?
